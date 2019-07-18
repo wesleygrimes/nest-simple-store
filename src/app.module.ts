@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { InMemoryStoreModule } from './in-memory-store/in-memory-store.module';
+import { SimpleStoreModule } from './simple-store/simple-store.module';
 
 @Module({
-  imports: [InMemoryStoreModule],
+  imports: [SimpleStoreModule],
   controllers: [AppController],
   providers: [AppService],
 })
