@@ -1,0 +1,34 @@
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+
+import { InMemoryRepositoryModule } from '@nest-extensions/in-memory'
+
+@Module({
+  imports: [
+      InMemoryRepositoryModule.forRoot({
+          filePath: './db/'
+          debugMode": false
+          fileType: InMemoryRepositoryFileTypes.JSON
+      }),
+      InMemoryRepositoryModule.forFeature<User>('user', {})
+  ],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
+
+interface InMemoryEntity {
+  id: string | number;
+}
+
+interface User extends InMemoryEntity<User> {
+  name: string
+  email: string;
+}
+
+constructor(private readonly userEntityRepo: InMemoryRepository<User>) {}
+
+getUsers() {
+    return this.userEntityRepo.get();
+}
